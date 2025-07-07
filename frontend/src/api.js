@@ -1,12 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: "http://localhost:5000/api",
-  baseURL: "https://employee-utx8.vercel.app",
-
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-// Attach token to every request if present
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
