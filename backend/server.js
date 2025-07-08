@@ -4,9 +4,9 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 // Import routes
-import authRoutes from "../routes/auth.js";
-import employeeRoutes from "../routes/employeeRoutes.js";
-import departmentRoutes from "../routes/department.js";
+import authRoutes from "./routes/auth.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
+import departmentRoutes from "./routes/department.js";
 
 // Load environment variables
 dotenv.config();
@@ -21,19 +21,7 @@ console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
 const app = express();
 
 // Middleware
-// app.use(cors());
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5174",
-      "http://localhost:5173",
-      "https://employee-teal.vercel.app",
-    ],
-    credentials: false,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 // MongoDB connection options
@@ -73,7 +61,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-export default function handler(req, res) {
-  return app(req, res); // Let Express handle it
-}
-
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
